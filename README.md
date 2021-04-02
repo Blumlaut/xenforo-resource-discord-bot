@@ -9,6 +9,7 @@ Every 30 minutes from when the bot was started, it will fetch the pages defined 
 
 This process is designed to stress the host as little as possible, each Category is only fetched once every 30 Minutes, Resources are not fetched individually.
 
+### Note: This bot is optimized for the Racedepartment Forums, your mileage may vary on other Platforms, or versions.
 
 ## Why would i need this?
 
