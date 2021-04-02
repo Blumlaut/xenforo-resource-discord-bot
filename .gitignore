@@ -16,6 +16,9 @@ pids
 node_modules/
 jspm_packages/
 
+# we dont want this
+package-lock.json
+
 # Optional npm cache directory
 .npm
 
