@@ -48,7 +48,16 @@ We will want to configure our Bot before running it, so copy the `config.example
 
 - `DiscordToken` - Your Discord API Key
 - `DiscordChannel` - The Channel ID where Updates should be sent, the bot should already be added to the Guild and have permissions to read and write into it.
-- `Categories` - An Array of Links, which would be the RaceDepartment Categories, for example, `https://www.racedepartment.com/downloads/categories/ams-cars.121/` for the "AMS Cars" Category.
+- `Categories` - An Array of Links, which would be the RaceDepartment Categories, for example, 
+```json
+"Categories": [
+        "https://www.racedepartment.com/downloads/categories/ac-cars.6/",
+        "https://www.racedepartment.com/downloads/categories/ac-tracks.8/",
+        "https://www.racedepartment.com/downloads/categories/ac-misc.10/",
+        "https://www.racedepartment.com/downloads/categories/ac-apps.4/",
+        "https://www.racedepartment.com/downloads/categories/ac-sounds.9/"
+    ]
+```
 
 
 Now we Save&Exit, thats everything taken care of!
