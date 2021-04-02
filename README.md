@@ -26,7 +26,7 @@ Currently this is a small experiment and learning experience for me, i invite an
 Using this Bot is very simple, you need the following:
 
 ```
-a shell on the system you want to set the bot up. 
+a shell
 Git
 NodeJS + NPM
 Some application to allow the bot to run unattended (tmux, screen....)
