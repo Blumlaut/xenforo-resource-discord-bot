@@ -66,3 +66,7 @@ Now we Save&Exit, thats everything taken care of!
 ### Step 2 - Make it happen
 
 Now simply start the Bot using `node rd-bot.js`, it should show a nice `Logged in as UserName#ID` message and immediately start scanning the Categories.
+
+If there have been any resources uploaded or Updated in the past 30 Minutes, they will now be shown in the Channel:
+
+![](https://blumlaut.me/s/q7fbPYYE2kTyidr/preview)
