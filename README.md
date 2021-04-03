@@ -48,7 +48,7 @@ We will want to configure our Bot before running it, so copy the `config.example
 
 - `DiscordToken` - Your Discord API Key
 - `DiscordChannel` - The Channel ID where Updates should be sent, the bot should already be added to the Guild and have permissions to read and write into it.
-- `Categories` - An Array of Links, which would be the RaceDepartment Categories, for example, 
+- `Categories` - An Array of Links, which would be the Xenforo Resource Categories, for example, 
 ```json
 "Categories": [
         "https://www.racedepartment.com/downloads/categories/ac-cars.6/",
