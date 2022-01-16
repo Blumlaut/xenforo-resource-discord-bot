@@ -73,3 +73,8 @@ Now simply start the Bot using `node rd-bot.js`, it should show a nice `Logged i
 If there have been any resources uploaded or Updated in the past 30 Minutes, they will now be shown in the Channel:
 
 ![](https://blumlaut.me/s/q7fbPYYE2kTyidr/preview)
+
+
+### Updating the Bot
+
+In case of updates, it's recommended that you first make sure your NodeJS and NPM is up to date, then open the bot directory and run `git pull`, after Git pulled the latest files run `npm i` to update dependencies, once that's done simply restart the bot!
