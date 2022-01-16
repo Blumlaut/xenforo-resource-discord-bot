@@ -36,15 +36,26 @@ function updateRD() {
                     var update = false
                     var send = false
 
-                    var latestName = latest.querySelector(".structItem-title").children[0].textContent
-                    console.log("----- SCANNING " + latestName + " -----")
-                    console.log("Resource Name: " + latestName)
 
+                    var titleIndex = 0
+
+                    if (latest.querySelector(".structItem-title").children[titleIndex].className.includes('labelLink')) {
+                        titleIndex=+1 // push our index one up as xenforo variant contains tags before the title name
+                    }
+
+                    var latestName = latest.querySelector(".structItem-title").children[titleIndex].textContent
+
+
+                    var latestAuthor = latest.querySelector(".structItem-parts").children[0].children[0].textContent // Get the Author of the Resource
                     var latestDescription = latest.querySelector(".structItem-resourceTagLine").textContent // get Description
-                    console.log("Resource Description: " + latestDescription)
+                    var latestDownloads = latest.querySelector(".structItem-metaItem--downloads").children[1].textContent // get Download Count
+                    var latestCategory = document.querySelector(".p-title-value").textContent
+                    var latestURL = latest.querySelector(".structItem-title").children[titleIndex].getAttribute('href')
+                    var latestVersion = latest.querySelector(".structItem-title").children[titleIndex+1].textContent
+                    var latestTime = latest.querySelector(".structItem-startDate").children[0].children[0].getAttribute('data-time') // get the Date the Resource was submitted, UNIX Time
+                    var latestUpdate = latest.querySelector(".structItem-metaItem--lastUpdate").children[1].children[0].children[0].getAttribute('data-time') // get the Date the Resource was last Updated, again, UNIX Time
+                    var latestImage = latest.querySelector(".structItem-iconContainer").children[0].children[0].getAttribute("src") // get the Icon of the Resource
 
-                    var latestDownloads = latest.querySelector(".structItem-metaItem--downloads").children[0].textContent // get Download Count
-                    console.log("Resource Downloads: " + latestDownloads)
 
                     var latestStarsArray = latest.querySelectorAll(".ratingStars-star--full, .ratingStars-star--half") // Collect the Amount of Stars we have
                     var latestStars = 0
@@ -55,22 +66,26 @@ function updateRD() {
                             latestStars = latestStars + 1 // full star is 1 score, we dont count empty stars as they are zero.
                         }
                     }
+
+                    console.log("----- SCANNING " + latestName + " -----")
+                    console.log("Resource Name: " + latestName)
+
+                    console.log("Resource Description: " + latestDescription)
+
+                    console.log("Resource Downloads: " + latestDownloads)
+
+
                     console.log("Stars: " + latestStars)
 
 
-                    var latestCategory = document.querySelector(".p-title-value").textContent
-                    var latestURL = latest.querySelector(".structItem-title").children[0].getAttribute('href')
                     console.log("URL: "+latestURL)
 
-                    var latestVersion = latest.querySelector(".structItem-title").children[1].textContent
                     console.log("Resource Version: " + latestVersion)
 
-                    var latestTime = latest.querySelector(".structItem-startDate").children[0].children[0].getAttribute('data-time') // get the Date the Resource was submitted, UNIX Time
 
                     var released = new Date(latestTime * 1000) // js Date is in MS, so multiply by 1000
                     console.log("Released: " + released)
 
-                    var latestUpdate = latest.querySelector(".structItem-metaItem--lastUpdate").children[1].children[0].children[0].getAttribute('data-time') // get the Date the Resource was last Updated, again, UNIX Time
                     var updated = new Date(latestUpdate * 1000)
                     console.log("Last Update: " + updated)
 
@@ -82,13 +97,11 @@ function updateRD() {
                         send = true
                     }
 
-                    var latestImage = latest.querySelector(".structItem-iconContainer").children[0].children[0].getAttribute("src") // get the Icon of the Resource
                     if (!latestImage) {
                         latestImage = config.PlaceholderImage // if there's no icon, use the RD Logo
                     }
                     console.log("Image: "+latestImage)
 
-                    var latestAuthor = latest.querySelector(".structItem-parts").children[0].children[0].textContent // Get the Author of the Resource
                     console.log("Author: "+latestAuthor)
 
                     const embed = new Discord.MessageEmbed()
