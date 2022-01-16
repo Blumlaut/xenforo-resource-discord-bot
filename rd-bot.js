@@ -21,8 +21,12 @@ process.on('unhandledRejection', function(err) {
 
 refreshTime = (config.RefreshTime || 1800000)
 
-
 var pages = config.Categories
+
+
+function extractDomain(url) {
+    return url.match(/^(?:https?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\/\n\?\=]+)/im)[0]
+}
 
 function updateRD() {
     var time = new Date()
@@ -59,6 +63,7 @@ function updateRD() {
                     var latestTime = latest.querySelector(".structItem-startDate").children[0].children[0].getAttribute('data-time') // get the Date the Resource was submitted, UNIX Time
                     var latestUpdate = latest.querySelector(".structItem-metaItem--lastUpdate").children[1].children[0].children[0].getAttribute('data-time') // get the Date the Resource was last Updated, again, UNIX Time
                     var latestImage = latest.querySelector(".structItem-iconContainer").children[0].children[0].getAttribute("src") // get the Icon of the Resource
+                    var rootURL = extractDomain(page)
 
 
                     var latestStarsArray = latest.querySelectorAll(".ratingStars-star--full, .ratingStars-star--half") // Collect the Amount of Stars we have
@@ -112,11 +117,11 @@ function updateRD() {
 
                     embed.setDescription(latestDescription)
                     embed.setColor("#00D800") // Green is nice.
-                    if (config.RootURL) {
-                        embed.setThumbnail(config.RootURL+ "/" + latestImage) 
-                        embed.setURL(config.RootURL + latestURL)
-                    }
-                    
+
+                    embed.setThumbnail(rootURL + latestImage) 
+                    embed.setURL(rootURL + latestURL)
+
+
                     if (release) {
                         embed.setTitle(latestName + " " + latestVersion + " has been released.")
                     } else {

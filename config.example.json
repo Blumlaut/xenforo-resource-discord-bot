@@ -2,7 +2,6 @@
     "DiscordToken": "Your Discord Bot Token",
     "DiscordChannel": "Your Discord Channel",
     "PlaceholderImage": "RD_Short.png",
-    "RootURL": "https://www.racedepartment.com",
     "RefreshTime": 1800000,
     "Categories": [
         "https://www.racedepartment.com/downloads/categories/ac-cars.6/",
