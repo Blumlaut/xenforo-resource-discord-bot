@@ -84,7 +84,7 @@ function updateRD() {
 
                     var latestImage = latest.querySelector(".structItem-iconContainer").children[0].children[0].getAttribute("src") // get the Icon of the Resource
                     if (!latestImage) {
-                        latestImage = "/RD_Short.png" // if there's no icon, use the RD Logo
+                        latestImage = config.PlaceholderImage // if there's no icon, use the RD Logo
                     }
                     console.log("Image: "+latestImage)
 
@@ -95,8 +95,8 @@ function updateRD() {
 
                     embed.setDescription(latestDescription)
                     embed.setColor("#00D800") // Green is nice.
-                    embed.setThumbnail("https://www.racedepartment.com" + latestImage) // the domain will always be racedepartment.com
-                    embed.setURL("https://www.racedepartment.com" + latestURL)
+                    embed.setThumbnail(config.RootURL+ "/" + latestImage) 
+                    embed.setURL(config.RootURL + latestURL)
                     if (release) {
                         embed.setTitle(latestName + " " + latestVersion + " has been released.")
                     } else {
