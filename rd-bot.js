@@ -18,6 +18,10 @@ process.on('unhandledRejection', function(err) {
 });
 
 
+
+refreshTime = (config.RefreshTime || 1800000)
+
+
 var pages = config.Categories
 
 function updateRD() {
@@ -89,10 +93,10 @@ function updateRD() {
                     var updated = new Date(latestUpdate * 1000)
                     console.log("Last Update: " + updated)
 
-                    if (latestTime > ((time / 1000) - 1800)) { // if the resource has been Released in the last 30 minutes, its a new Release
+                    if (latestTime > ((time / 1000) - (refreshTime/1000))) { // if the resource has been Released in the last 30 minutes, its a new Release
                         release = true
                         send = true
-                    } else if (latestUpdate > ((time / 1000) - 1800)) { // if it's been Updated in the last 30 Minutes, it's an Update
+                    } else if (latestUpdate > ((time / 1000) - (refreshTime/1000))) { // if it's been Updated in the last 30 Minutes, it's an Update
                         update = true
                         send = true
                     }
@@ -129,7 +133,7 @@ function updateRD() {
 
             });
     }
-    setTimeout(updateRD, 1800000)
+    setTimeout(updateRD, refreshTime)
 }
 
 
