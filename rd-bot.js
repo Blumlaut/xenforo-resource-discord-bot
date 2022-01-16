@@ -102,7 +102,7 @@ function updateRD() {
                     }
 
                     if (!latestImage) {
-                        latestImage = config.PlaceholderImage // if there's no icon, use the RD Logo
+                        latestImage = (config.PlaceholderImage || "logo.png") // if there's no icon, use the RD Logo
                     }
                     console.log("Image: "+latestImage)
 
@@ -112,8 +112,11 @@ function updateRD() {
 
                     embed.setDescription(latestDescription)
                     embed.setColor("#00D800") // Green is nice.
-                    embed.setThumbnail(config.RootURL+ "/" + latestImage) 
-                    embed.setURL(config.RootURL + latestURL)
+                    if (config.RootURL) {
+                        embed.setThumbnail(config.RootURL+ "/" + latestImage) 
+                        embed.setURL(config.RootURL + latestURL)
+                    }
+                    
                     if (release) {
                         embed.setTitle(latestName + " " + latestVersion + " has been released.")
                     } else {
