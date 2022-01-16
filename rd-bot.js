@@ -1,12 +1,13 @@
-// Thank you to the following Packages for existing:
-const jsdom = require("jsdom"); // JSDOM
-const Discord = require('discord.js'); // Discord.js
-const fetch = require('node-fetch'); // node-fetch
+const jsdom = require("jsdom"); // https://www.npmjs.com/package/jsdom
+const { JSDOM } = jsdom;
+const fetch = require('node-fetch');
 
+const Discord = require('discord.js');
 
 const config = require('./config.json')
-const client = new Discord.Client();
-const { JSDOM } = jsdom;
+var Intents = Discord.Intents
+const client = new Discord.Client({ partials: [ 'USER', 'MESSAGE'], intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
+
 
 process.on('uncaughtException', function(err) {
     console.log('Caught exception: ', err);
@@ -15,6 +16,7 @@ process.on('uncaughtException', function(err) {
 process.on('unhandledRejection', function(err) {
     console.log('Caught exception: ', err);
 });
+
 
 var pages = config.Categories
 
@@ -25,24 +27,23 @@ function updateRD() {
         fetch(page) // fetch the category
             .then(res => res.text())
             .then(body => {
-                var dom = new JSDOM(body) // generate a DOM Object from the response
-                var document = dom.window.document // we dont need anything above .document
-                var resources = document.querySelectorAll(".structItem--resource") // fetch every resource on the page
+                var dom = new JSDOM(body)
+                var document = dom.window.document
+                var resources = document.querySelectorAll(".structItem--resource")
+                console.log("found "+resources.length+" resources")
                 for (const latest of resources) {
                     var release = false // define some variables
                     var update = false
                     var send = false
 
-                    var latestCategory = document.querySelector(".p-title-value").innerHTML // get the category we are in, e.g. "AC Cars"
-
-                    var latestName = latest.querySelector(".structItem-title").children[0].innerHTML // get the name of the Resource we will be looking at
+                    var latestName = latest.querySelector(".structItem-title").children[0].textContent
                     console.log("----- SCANNING " + latestName + " -----")
                     console.log("Resource Name: " + latestName)
 
-                    var latestDescription = latest.querySelector(".structItem-resourceTagLine").innerHTML // get Description
+                    var latestDescription = latest.querySelector(".structItem-resourceTagLine").textContent // get Description
                     console.log("Resource Description: " + latestDescription)
 
-                    var latestDownloads = latest.querySelector(".structItem-metaItem--downloads").children[1].innerHTML // get Download Count
+                    var latestDownloads = latest.querySelector(".structItem-metaItem--downloads").children[0].textContent // get Download Count
                     console.log("Resource Downloads: " + latestDownloads)
 
                     var latestStarsArray = latest.querySelectorAll(".ratingStars-star--full, .ratingStars-star--half") // Collect the Amount of Stars we have
@@ -56,9 +57,12 @@ function updateRD() {
                     }
                     console.log("Stars: " + latestStars)
 
-                    var latestURL = latest.querySelector(".structItem-title").children[0].getAttribute('href') // get the URL to the Resource, we will link this in the Discord Message
 
-                    var latestVersion = latest.querySelector(".structItem-title").children[1].innerHTML // Get the current Resource Version
+                    var latestCategory = document.querySelector(".p-title-value").textContent
+                    var latestURL = latest.querySelector(".structItem-title").children[0].getAttribute('href')
+                    console.log("URL: "+latestURL)
+
+                    var latestVersion = latest.querySelector(".structItem-title").children[1].textContent
                     console.log("Resource Version: " + latestVersion)
 
                     var latestTime = latest.querySelector(".structItem-startDate").children[0].children[0].getAttribute('data-time') // get the Date the Resource was submitted, UNIX Time
@@ -82,9 +86,10 @@ function updateRD() {
                     if (!latestImage) {
                         latestImage = "/RD_Short.png" // if there's no icon, use the RD Logo
                     }
-                    console.log("https://www.racedepartment.com" + latestImage)
+                    console.log("Image: "+latestImage)
 
-                    var latestAuthor = latest.querySelector(".structItem-parts").children[0].children[0].innerHTML // Get the Author of the Resource
+                    var latestAuthor = latest.querySelector(".structItem-parts").children[0].children[0].textContent // Get the Author of the Resource
+                    console.log("Author: "+latestAuthor)
 
                     const embed = new Discord.MessageEmbed()
 
@@ -92,19 +97,17 @@ function updateRD() {
                     embed.setColor("#00D800") // Green is nice.
                     embed.setThumbnail("https://www.racedepartment.com" + latestImage) // the domain will always be racedepartment.com
                     embed.setURL("https://www.racedepartment.com" + latestURL)
-                    if (release) { // have two language strings for each.
+                    if (release) {
                         embed.setTitle(latestName + " " + latestVersion + " has been released.")
                     } else {
                         embed.setTitle(latestName + " has been updated to " + latestVersion + ".")
                     }
-
-                    // my auto-formatting makes this ugly, sorry :(
                     embed.addFields({ name: "Category", value: latestCategory, inline: true }, { name: "Author", value: latestAuthor, inline: true }, { name: "Mod Name", value: latestName, inline: true }, { name: "Version", value: latestVersion, inline: true }, { name: "Downloads", value: latestDownloads, inline: true }, { name: "Rating", value: latestStars + "/5", inline: true })
                     embed.setTimestamp() // set a timestamp, cause why not?
 
 
                     if (send == true) { // if the resource has actually been released or updated recently, send it off!
-                        client.channels.cache.get(config.DiscordChannel).send({ embed })
+                        client.channels.cache.get(config.DiscordChannel).send({ embeds: [embed] })
                     }
 
                     console.log("------ END SCAN ------")
@@ -113,7 +116,7 @@ function updateRD() {
 
             });
     }
-    setTimeout(updateRD, 1800000) // do the same thing again in roughly 30 minutes.
+    setTimeout(updateRD, 1800000)
 }
 
 
