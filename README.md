@@ -7,9 +7,9 @@ xenforo-resource-discord-bot is a small NodeJS Application that scrapes predefin
 
 Every 30 minutes from when the bot was started, it will fetch the pages defined in the config and look at the recently added/updates resources, if the resource has been uploaded or updated in the past 30 minutes, a discord message will be sent in the defined channel.
 
-This process is designed to stress the host as little as possible, each Category is only fetched once every 30 Minutes, Resources are not fetched individually.
+This process is designed to stress the host as little as possible, each Category is only fetched once every 30 minutes by default, Resources are not fetched individually.
 
-### Note: This bot is optimized for the Racedepartment Forums, your mileage may vary on other Platforms, or versions.
+### Note: This bot is optimized for the Racedepartment Forums, your mileage may vary on other Platforms, or versions. If you have a a case where it doesnt work, please create an Issue!
 
 ## Why would i need this?
 
