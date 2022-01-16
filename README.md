@@ -28,7 +28,7 @@ Using this Bot is very simple, you need the following:
 ```
 a shell
 Git
-NodeJS + NPM
+NodeJS 16 or above + NPM
 Some application to allow the bot to run unattended (tmux, screen....)
 a text editor
 ```
