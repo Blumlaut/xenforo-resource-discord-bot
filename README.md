@@ -49,7 +49,6 @@ We will want to configure our Bot before running it, so copy the `config.example
 - `DiscordToken` - Your Discord API Key
 - `DiscordChannel` - The Channel ID where Updates should be sent, the bot should already be added to the Guild and have permissions to read and write into it.
 - `PlaceholderImage` - a path, from domain root, which should be used as a placeholder image
-- `RootURL` - the root url which will be used to link to categories/resources, for example `https://www.racedepartment.com`
 - `RefreshTime` - How often, in milliseconds, the categories should be checked.
 - `Categories` - An Array of Links, which would be the Xenforo Resource Categories, for example, 
 ```json
