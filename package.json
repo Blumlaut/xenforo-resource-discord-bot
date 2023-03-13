@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "discord.js": "13.8.1",
+    "discord.js": "14.8.0",
     "jsdom": "21.1.0",
     "node-fetch": "2.6.9"
   }
