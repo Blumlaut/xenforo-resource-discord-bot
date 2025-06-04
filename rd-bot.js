@@ -3,10 +3,10 @@ const { JSDOM } = jsdom;
 const fetch = require('node-fetch');
 
 const Discord = require('discord.js');
+const { Partials, GatewayIntentBits } = Discord;
 
 const config = require('./config.json')
-var Intents = Discord.Intents
-const client = new Discord.Client({ partials: [ 'USER', 'MESSAGE'], intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
+const client = new Discord.Client({ partials: [ Partials.User, Partials.Message], intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages] });
 
 
 process.on('uncaughtException', function(err) {
@@ -132,7 +132,7 @@ function updateRD() {
 
 
                     if (send == true) { // if the resource has actually been released or updated recently, send it off!
-                        client.channels.cache.get(config.DiscordChannel).send({ embeds: [embed] })
+                        client.channels.fetch(config.DiscordChannel).send({ embeds: [embed] })
                     }
 
                     console.log("------ END SCAN ------")
