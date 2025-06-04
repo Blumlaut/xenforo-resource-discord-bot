@@ -1,6 +1,5 @@
 const jsdom = require("jsdom"); // https://www.npmjs.com/package/jsdom
 const { JSDOM } = jsdom;
-const fetch = require('node-fetch');
 
 const Discord = require('discord.js');
 const { Partials, GatewayIntentBits } = Discord;
